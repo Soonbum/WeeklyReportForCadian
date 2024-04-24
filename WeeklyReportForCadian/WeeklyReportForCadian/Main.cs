@@ -252,19 +252,17 @@ namespace WeeklyReportForCadian
                 TextBox[] textBox_Unsolved = new TextBox[] { textBox_Mon_Unsolved, textBox_Tue_Unsolved, textBox_Wed_Unsolved, textBox_Thu_Unsolved, textBox_Fri_Unsolved };
 
                 // 제출일 가져오기
-                string dateString = workSheet.Cells[2, 3].Value;
-                DateTime submitTime;
+                object dateString = workSheet.Cells[2, 3].Value;
 
                 try
                 {
-                    submitTime = DateTime.ParseExact(dateString, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                    dateTimePicker_SubmitDate.Value = submitTime;
+                    dateTimePicker_SubmitDate.Value = workSheet.Cells[2, 3].Value;
 
                     // 이름 가져오기
                     textBox_Name.Text = workSheet.Cells[3, 3].Value;
 
                     // 월요일부터 금요일까지 내용 가져오기
-                    int[] eachLineNumber = new int[7];  // 월~금, 차주 정보가 있는 각각의 행 번호 (마지막은 경계값)
+                    int[] eachLineNumber = new int[7];  // 월~금[0~4], 차주 정보가 있는 각각의 행 번호[5] (마지막[6]은 경계값)
                     int eachIndex = 1;
                     eachLineNumber[0] = 5;      // 월요일 정보가 있는 행 번호
                     eachLineNumber[6] = 500;    // 경계값
@@ -277,7 +275,7 @@ namespace WeeklyReportForCadian
                         {
                             eachLineNumber[eachIndex] = curLineNumber;
                             eachIndex++;
-                            curLineNumber += 2;
+                            curLineNumber++;
                             continue;
                         }
                         else if ((cellContent is string) && ((string)cellContent != "일자"))
@@ -285,8 +283,11 @@ namespace WeeklyReportForCadian
                             curLineNumber++;
                             continue;
                         }
-
-                        curLineNumber++;
+                        else
+                        {
+                            curLineNumber++;
+                            continue;
+                        }
                     }
 
                     eachLineNumber[5]--;        // 금요일 정보에 대한 인덱스 임시로 1 차감 (경계값 역할)
