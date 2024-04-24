@@ -88,12 +88,10 @@ namespace WeeklyReportForCadian
 
                 textBox_lineCount1 = textBox_Job[i].Text.Count(f => (f == '\n'));
                 textBox_lineCount2 = textBox_Unsolved[i].Text.Count(f => (f == '\n'));
-                curCellHeight = Math.Max(textBox_lineCount1, textBox_lineCount2);
+                curCellHeight = Math.Max(textBox_lineCount1, textBox_lineCount2) + 1;
 
                 // 업무 내용
                 contents = textBox_Job[i].Text.Split('\n');
-                Array.Resize(ref contents, contents.Length + 1);
-                contents[contents.Length - 1] = "\r\n";
                 tempLineNumber = curLineNumber;
                 foreach (var line in contents)
                 {
@@ -103,8 +101,6 @@ namespace WeeklyReportForCadian
 
                 // 미해결(계속 진행) 사항
                 contents = textBox_Unsolved[i].Text.Split('\n');
-                Array.Resize(ref contents, contents.Length + 1);
-                contents[contents.Length - 1] = "\r\n";
                 tempLineNumber = curLineNumber;
                 foreach (var line in contents)
                 {
@@ -163,8 +159,6 @@ namespace WeeklyReportForCadian
 
             // 다음 1주간 개발 및 업무 계획
             contents = textBox_NextWeek_Plan.Text.Split('\n');
-            Array.Resize(ref contents, contents.Length + 1);
-            contents[contents.Length - 1] = "\r\n";
             tempLineNumber = curLineNumber + 1;
             foreach (var line in contents)
             {
@@ -174,8 +168,6 @@ namespace WeeklyReportForCadian
 
             // 기타
             contents = textBox_NextWeek_etc.Text.Split('\n');
-            Array.Resize(ref contents, contents.Length + 1);
-            contents[contents.Length - 1] = "\r\n";
             tempLineNumber = curLineNumber + 1;
             foreach (var line in contents)
             {
@@ -183,7 +175,7 @@ namespace WeeklyReportForCadian
                 tempLineNumber++;
             }
 
-            curCellHeight = Math.Max(6, curCellHeight);
+            curCellHeight = Math.Max(6, curCellHeight) + 1;
 
             // 경계선 (사이드)
             for (int j = curLineNumber; j < curLineNumber + curCellHeight; j++)
