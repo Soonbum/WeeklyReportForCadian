@@ -232,6 +232,15 @@ namespace WeeklyReportForCadian
 
                 MessageBox.Show("주간보고서 내용을 성공적으로 작성했습니다.", "성공", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            else
+            {
+                excelApp.Quit();
+
+                // 리소스 해제
+                releaseObject(workSheet);
+                releaseObject(workbook);
+                releaseObject(excelApp);
+            }
         }
 
         private void button_Import_Click(object sender, EventArgs e)
@@ -418,13 +427,13 @@ namespace WeeklyReportForCadian
             ModalessForm_HelpInfo.Show();
 
             ModalessForm_HelpInfo.Text = "도움말 - 주간보고서 코드명";
-            ModalessForm_HelpInfo.Size = new System.Drawing.Size(600, 300);
+            ModalessForm_HelpInfo.Size = new System.Drawing.Size(800, 500);
 
             TextBox TextBox_helpText = new TextBox();
             TextBox_helpText.Enabled = true;
             TextBox_helpText.Multiline = true;
-            TextBox_helpText.Height = 200;
-            TextBox_helpText.Width = 500;
+            TextBox_helpText.Width = 700;
+            TextBox_helpText.Height = 400;
             TextBox_helpText.Location = new System.Drawing.Point(25, 25);
             TextBox_helpText.Name = "textBox_helpText";
             TextBox_helpText.Text =
@@ -438,7 +447,18 @@ namespace WeeklyReportForCadian
                 "  Plan: Study, Research, Documentation\r\n" +
                 "  Development: 없음\r\n" +
                 "  Check: Study, Research, Documentation\r\n" +
-                "  Amend: Plan, Development\r\n";
+                "  Amend: Plan, Development\r\n" +
+                "\r\n" +
+                "[Plan_Study]: 프로젝트 계획 수립을 위한 학습, 회의\r\n" +
+                "[Plan_Research]: 프로젝트 계획 수립을 위한 연구, 회의\r\n" +
+                "[Plan_Documentation]: 프로젝트 계획 수립을 위한 보고서 작성(개발 계획서)\r\n" +
+                "[Development]: 기능 개발, 코딩(사업 계획서 기반)\r\n" +
+                "[Check_Study]: 수정을 위한 학습, 회의\r\n" +
+                "[Check_Research]: 수정을 위한 연구, 회의\r\n" +
+                "[Check_Documentation]: 수정을 위한 보고서 작성(각종 보고서, 결과 보고서, 회의 자료)\r\n" +
+                "[Amend_Plan]: 프로젝트 계획 변경을 위한 수정, 회의\r\n" +
+                "[Amend_Development]: 프로젝트 기능 변경을 위한 수정(버그 처리)\r\n" +
+                "[Others] 그 외 기타(논문, 특허 서류, 회의, 회사 공무 등)\r\n";
 
             ModalessForm_HelpInfo.Controls.Add(TextBox_helpText);
         }
